@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+APP="$1"
+
+# Prevent the current container from being killed... 
+if [[ -f "$DOKKU_ROOT/$APP/PORT" ]]; then
+  echo "Preventing the current container from being killed..."
+  mv "$DOKKU_ROOT/$APP/PORT" "$DOKKU_ROOT/$APP/OLD_PORT"
+  mv "$DOKKU_ROOT/$APP/CONTAINER" "$DOKKU_ROOT/$APP/OLD_CONTAINER"
+else
+  echo "No current container..."
+fi
